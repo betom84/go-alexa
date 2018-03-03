@@ -1,6 +1,7 @@
 package common
 
 import (
+	"github.com/betom84/go-alexa/smarthome/common/capabilities"
 	"time"
 )
 
@@ -59,7 +60,7 @@ func (c *Context) AddTemperatureProperty(temperature float32, timeOfSample time.
 }
 
 // AddEndpointHealthProperty adds a connectivity property to context
-func (c *Context) AddEndpointHealthProperty(health HealthConscious, timeOfSample time.Time) {
+func (c *Context) AddEndpointHealthProperty(health capabilities.HealthConscious, timeOfSample time.Time) {
 
 	var value = "OK"
 	if !health.IsConnected() {

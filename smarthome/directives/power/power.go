@@ -2,8 +2,10 @@ package power
 
 import (
 	"fmt"
-	"github.com/betom84/go-alexa/smarthome/common"
 	"time"
+
+	"github.com/betom84/go-alexa/smarthome/common"
+	"github.com/betom84/go-alexa/smarthome/common/capabilities"
 )
 
 // Now is used to change the current time for tets, defaults to time.Now()
@@ -34,7 +36,7 @@ func (c Controller) Process(dir *common.Directive, ed interface{}) (*common.Resp
 		return nil, common.NewInvalidDirectiveError("directive name should be TurnOn or TurnOff")
 	}
 
-	pd, ok := ed.(common.PowerDevice)
+	pd, ok := ed.(capabilities.PowerDevice)
 	if !ok {
 		return nil, fmt.Errorf("endpoint device does not support change of powerState")
 	}

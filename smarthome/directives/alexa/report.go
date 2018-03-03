@@ -2,8 +2,10 @@ package alexa
 
 import (
 	"fmt"
-	"github.com/betom84/go-alexa/smarthome/common"
 	"time"
+
+	"github.com/betom84/go-alexa/smarthome/common"
+	"github.com/betom84/go-alexa/smarthome/common/capabilities"
 )
 
 // Now is used to change the current time for tets, defaults to time.Now()
@@ -27,17 +29,17 @@ func (r Report) Process(dir *common.Directive, ed interface{}) (*common.Response
 	resp.Context = common.NewContext()
 
 	switch rd := ed.(type) {
-	case common.PowerDevice:
+	case capabilities.PowerDevice:
 		state, err := rd.State()
 		if err != nil {
 			return nil, err
 		}
 		resp.Context.AddPowerStateProperty(state, Now())
-	case common.TemperatureSensor:
+	case capabilities.TemperatureSensor:
 		resp.Context.AddTemperatureProperty(rd.Temperature(), Now())
 	}
 
-	if h, ok := ed.(common.HealthConscious); ok == true {
+	if h, ok := ed.(capabilities.HealthConscious); ok == true {
 		resp.Context.AddEndpointHealthProperty(h, Now())
 	}
 
