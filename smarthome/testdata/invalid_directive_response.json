@@ -1,0 +1,1 @@
+{"event":{"header":{"namespace":"Alexa","name":"ErrorResponse","messageId":"any-const-message-id-for-test","payloadVersion":"3"},"payload":{"type":"INVALID_DIRECTIVE","message":"Directive not supported"}}}

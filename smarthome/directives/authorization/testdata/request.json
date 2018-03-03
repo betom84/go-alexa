@@ -1,0 +1,20 @@
+{
+  "directive": {
+    "header": {
+      "namespace": "Alexa.Authorization",
+      "name": "AcceptGrant",
+      "messageId": "5f8a426e-01e4-4cc9-8b79-65f8bd0fd8a4",
+      "payloadVersion": "3"
+    },
+    "payload": {
+      "grant": {
+        "type": "OAuth2.AuthorizationCode",
+        "code": "VGhpcyBpcyBhbiBhdXRob3JpemF0aW9uIGNvZGUuIDotKQ=="
+      },
+      "grantee": {
+        "type": "BearerToken",
+        "token": "access-token-from-skill"
+      }
+    }
+  }
+}

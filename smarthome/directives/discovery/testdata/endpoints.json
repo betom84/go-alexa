@@ -1,0 +1,32 @@
+[
+    {
+        "endpointId": "test-01",
+        "friendlyName": "Test",
+        "description": "Endpoint for testing",
+        "manufacturerName": "TDD Inc.",
+        "displayCategories": [
+            "LIGHT"
+        ],
+        "cookie": {
+            "type": "testtype",
+            "id": "01",
+            "name": "Test"
+        },
+        "capabilities": [
+            {
+                "type": "AlexaInterface",
+                "interface": "Alexa.PowerController",
+                "version": "3",
+                "properties": {
+                    "supported": [
+                        {
+                            "name": "powerState"
+                        }
+                    ],
+                    "proactivelyReported": false,
+                    "retrievable": true
+                }
+            }
+        ]
+    }
+]

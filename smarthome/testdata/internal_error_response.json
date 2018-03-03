@@ -1,0 +1,27 @@
+{
+    "event": {
+        "header": {
+            "namespace": "Alexa",
+            "name": "ErrorResponse",
+            "messageId": "any-const-message-id-for-test",
+            "correlationToken": "dFMb0z+PgpgdDmluhJ1LddFvSqZ/jCc8ptlAKulUj90jSqg==",
+            "payloadVersion": "3"
+        },
+        "endpoint": {
+            "scope": {
+                "type": "BearerToken",
+                "token": "access-token-from-skill"
+            },
+            "endpointId": "appliance-001",
+            "cookie": {
+                "type": "testing",
+                "id": "ABC-123",
+                "name": "Device for testing"
+            }
+        },
+        "payload": {
+            "type": "INTERNAL_ERROR",
+            "message": "something horrible"
+        }
+    }
+}

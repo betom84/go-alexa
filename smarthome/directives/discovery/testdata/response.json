@@ -1,0 +1,44 @@
+{
+   "event": {
+     "header": {
+       "namespace": "Alexa.Discovery",
+       "name": "Discover.Response",
+       "messageId": "",
+       "payloadVersion": "3"
+     },
+     "payload": {
+       "endpoints": [
+         {
+           "capabilities": [
+             {
+               "interface": "Alexa.PowerController",
+               "properties": {
+                 "proactivelyReported": false,
+                 "retrievable": true,
+                 "supported": [
+                   {
+                     "name": "powerState"
+                   }
+                 ]
+               },
+               "type": "AlexaInterface",
+               "version": "3"
+             }
+           ],
+           "cookie": {
+             "id": "01",
+             "name": "Test",
+             "type": "testtype"
+           },
+           "description": "Endpoint for testing",
+           "displayCategories": [
+             "LIGHT"
+           ],
+           "endpointId": "test-01",
+           "friendlyName": "Test",
+           "manufacturerName": "TDD Inc."
+         }
+       ]
+     }
+   }
+ }

@@ -1,0 +1,27 @@
+{
+   "context": {
+     "properties": null
+   },
+   "event": {
+     "header": {
+       "namespace": "Alexa",
+       "name": "StateReport",
+       "messageId": "",
+       "correlationToken": "abcdef-123456",
+       "payloadVersion": "3"
+     },
+     "endpoint": {
+       "scope": {
+         "type": "BearerToken",
+         "token": "access-token-from-skill"
+       },
+       "endpointId": "appliance-001",
+       "cookie": {
+         "id": "",
+         "type": "",
+         "name": ""
+       }
+     },
+     "payload": {}
+   }
+ }

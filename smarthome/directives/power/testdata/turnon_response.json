@@ -1,0 +1,35 @@
+{
+   "context": {
+     "properties": [
+       {
+         "namespace": "Alexa.PowerController",
+         "name": "powerState",
+         "value": "ON",
+         "timeOfSample": "2018-02-23T22:57:05Z",
+         "uncertaintyInMilliseconds": 100
+       }
+     ]
+   },
+   "event": {
+     "header": {
+       "namespace": "Alexa",
+       "name": "Response",
+       "messageId": "",
+       "correlationToken": "dFMb0z+PgpgdDmluhJ1LddFvSqZ/jCc8ptlAKulUj90jSqg==",
+       "payloadVersion": "3"
+     },
+     "endpoint": {
+       "scope": {
+         "type": "BearerToken",
+         "token": "access-token-from-skill"
+       },
+       "endpointId": "appliance-001",
+       "cookie": {
+         "id": "",
+         "type": "",
+         "name": ""
+       }
+     },
+     "payload": {}
+   }
+ }
