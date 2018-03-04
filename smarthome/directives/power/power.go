@@ -1,3 +1,4 @@
+// Package power contains the directive processor to handle directives with namepace "Alexa.PowerController"
 package power
 
 import (

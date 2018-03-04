@@ -1,3 +1,4 @@
+// Package authorization contains the directive processor to handle directives with namepace "Alexa.Authorization"
 package authorization
 
 import (

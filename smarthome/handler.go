@@ -1,3 +1,4 @@
+// Package smarthome provides the http handler to process alexa smart home directives
 package smarthome
 
 import (

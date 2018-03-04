@@ -1,5 +1,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/betom84/go-alexa)](https://goreportcard.com/report/github.com/betom84/go-alexa)
 [![codebeat badge](https://codebeat.co/badges/5cf553b7-d574-4a5f-8134-bbdab8ed034c)](https://codebeat.co/projects/github-com-betom84-go-alexa-master)
+[![GoDoc](https://godoc.org/github.com/betom84/go-alexa?status.svg)](https://godoc.org/github.com/betom84/go-alexa)
 
 # go-alexa
 
@@ -128,11 +129,11 @@ The file `endpoints.json` used by that example, must contain the devices (or end
     }
 ]
 ```
-As you can see, this file contains exactly the structure expected by Alexa´s [Discover](https://developer.amazon.com/de/docs/device-apis/alexa-discovery.html) directive. The fields declared within `cookie` are passed to the [DeviceFactory](#create-a-devicefactory) to create a device according the defined `capabilities`. That means, devices created by the factory needs to satisfy the according capability interface to work out of the box.
+As you can see, this file contains exactly the structure expected by Alexa´s [Discover](https://developer.amazon.com/de/docs/device-apis/alexa-discovery.html) directive. The fields declared within `cookie` are passed to the [DeviceFactory](#create-a-devicefactory) to create a device according the defined `capabilities`. That means, devices created by the factory needs to satisfy the according [capability interface](https://godoc.org/github.com/betom84/go-alexa/smarthome/common/capabilities) to work out of the box.
 
 ### Create a DeviceFactory
 
-The `DeviceFactory` used above is needed to create a device which is capable of the action intended by Alexa. This device will be passed to the `DirectiveProcessor` to finally perform the intended action. By using `smarthome.NewDefaultHandler()` to create the handler, all supported processors are automatically added. Therefore devices need to satisfy the appropriate interfaces, wich can be found in `github.com/betom84/go-alexa/smarthome/common/capabilities`, to work with these processors.
+The `DeviceFactory` used above is needed to create a device which is capable of the action intended by Alexa. This device will be passed to the `DirectiveProcessor` to finally perform the intended action. By using `smarthome.NewDefaultHandler()` to create the handler, all supported processors are automatically added. Therefore devices need to satisfy the appropriate [capability interfaces](https://godoc.org/github.com/betom84/go-alexa/smarthome/common/capabilities) to work with these processors.
 
 ```go
 type DeviceFactory struct{}

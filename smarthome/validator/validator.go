@@ -1,3 +1,4 @@
+// Package validator is needed to validate response payload against a JSON-Schema
 package validator
 
 import (

@@ -1,3 +1,4 @@
+// Package directives contains the factory to create specific directive processors
 package directives
 
 import (

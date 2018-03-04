@@ -1,3 +1,4 @@
+// Package discovery contains the directive processor to handle directives with namepace "Alexa.Discovery"
 package discovery
 
 import (

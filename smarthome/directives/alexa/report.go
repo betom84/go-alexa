@@ -1,3 +1,4 @@
+// Package alexa contains the directive processor to handle directives with namepace "Alexa"
 package alexa
 
 import (
