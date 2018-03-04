@@ -1,6 +1,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/betom84/go-alexa)](https://goreportcard.com/report/github.com/betom84/go-alexa)
 [![codebeat badge](https://codebeat.co/badges/5cf553b7-d574-4a5f-8134-bbdab8ed034c)](https://codebeat.co/projects/github-com-betom84-go-alexa-master)
 [![GoDoc](https://godoc.org/github.com/betom84/go-alexa?status.svg)](https://godoc.org/github.com/betom84/go-alexa)
+[![CircleCI](https://circleci.com/gh/betom84/go-alexa.svg?style=shield)](https://circleci.com/gh/betom84/go-alexa)
+[![Coverage Status](https://coveralls.io/repos/github/betom84/go-alexa/badge.svg?branch=master)](https://coveralls.io/github/betom84/go-alexa?branch=master)
 
 # go-alexa
 
