@@ -2,12 +2,13 @@
 package directives
 
 import (
+	"io"
+
 	"github.com/betom84/go-alexa/smarthome/common"
 	"github.com/betom84/go-alexa/smarthome/directives/alexa"
 	"github.com/betom84/go-alexa/smarthome/directives/authorization"
 	"github.com/betom84/go-alexa/smarthome/directives/discovery"
 	"github.com/betom84/go-alexa/smarthome/directives/power"
-	"io"
 )
 
 // DirectiveProcessor describes something which can process an alexa directive

@@ -1,8 +1,9 @@
 package common
 
 import (
-	"github.com/betom84/go-alexa/smarthome/common/capabilities"
 	"time"
+
+	"github.com/betom84/go-alexa/smarthome/common/capabilities"
 )
 
 // Context holds properties of an endpoint

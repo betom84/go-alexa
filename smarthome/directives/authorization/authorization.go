@@ -4,10 +4,11 @@ package authorization
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/betom84/go-alexa/smarthome/common"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+
+	"github.com/betom84/go-alexa/smarthome/common"
 )
 
 // RequestTokenURL to change for tests

@@ -2,11 +2,12 @@ package example
 
 import (
 	"fmt"
+	"net/http"
+	"strings"
+
 	"github.com/betom84/go-alexa/smarthome"
 	"github.com/betom84/go-alexa/smarthome/directives"
 	"github.com/betom84/go-alexa/smarthome/validator"
-	"net/http"
-	"strings"
 )
 
 type MyDeviceFactory struct{}
