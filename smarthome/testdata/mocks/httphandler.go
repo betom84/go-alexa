@@ -21,10 +21,10 @@ func (h *MockHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.T.Fatalf("could not read request body; %v", err)
 	}
-	defer r.Body.Close()
+	defer func() { _ = r.Body.Close() }()
 
 	resp, status := h.RequestURI(r.Method, r.RequestURI, body)
-	w.Write(resp)
+	_, _ = w.Write(resp)
 	w.WriteHeader(status)
 }
 

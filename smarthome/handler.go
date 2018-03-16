@@ -85,7 +85,7 @@ func (h *Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 
 	writer.WriteHeader(http.StatusOK)
 	writer.Header().Set("Content-Type", "application/json")
-	writer.Write(resp)
+	_, _ = writer.Write(resp)
 }
 
 func (h *Handler) validateOnDemand(payload []byte) {
@@ -115,7 +115,7 @@ func (h *Handler) writeUnauthorizedHTTPResponse(writer http.ResponseWriter) {
 
 	writer.WriteHeader(http.StatusUnauthorized)
 	writer.Header().Set("Content-Type", "text/plain")
-	writer.Write([]byte(http.StatusText(http.StatusUnauthorized)))
+	_, _ = writer.Write([]byte(http.StatusText(http.StatusUnauthorized)))
 }
 
 func (h *Handler) writeBadRequestHTTPResponse(writer http.ResponseWriter, err error) {
@@ -123,7 +123,7 @@ func (h *Handler) writeBadRequestHTTPResponse(writer http.ResponseWriter, err er
 
 	writer.WriteHeader(http.StatusBadRequest)
 	writer.Header().Set("Content-Type", "text/plain")
-	writer.Write([]byte(http.StatusText(http.StatusBadRequest)))
+	_, _ = writer.Write([]byte(http.StatusText(http.StatusBadRequest)))
 }
 
 func (h *Handler) getDirectiveFromRequestBody(body []byte) (dir *common.Directive, err error) {
