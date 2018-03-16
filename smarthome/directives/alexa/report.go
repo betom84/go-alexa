@@ -40,7 +40,7 @@ func (r Report) Process(dir *common.Directive, ed interface{}) (*common.Response
 		resp.Context.AddTemperatureProperty(rd.Temperature(), Now())
 	}
 
-	if h, ok := ed.(capabilities.HealthConscious); ok == true {
+	if h, ok := ed.(capabilities.HealthConscious); ok {
 		resp.Context.AddEndpointHealthProperty(h, Now())
 	}
 

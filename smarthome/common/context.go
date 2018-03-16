@@ -27,7 +27,7 @@ func (c *Context) addProperty(p property) {
 func (c *Context) AddPowerStateProperty(state bool, timeOfSample time.Time) {
 
 	value := "OFF"
-	if state == true {
+	if state {
 		value = "ON"
 	}
 
