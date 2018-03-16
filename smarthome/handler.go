@@ -12,6 +12,7 @@ import (
 
 	"github.com/betom84/go-alexa/smarthome/common"
 	"github.com/betom84/go-alexa/smarthome/directives"
+	"github.com/betom84/go-alexa/smarthome/directives/authorization"
 	"github.com/betom84/go-alexa/smarthome/validator"
 )
 
@@ -41,7 +42,7 @@ type Handler struct {
 }
 
 // NewDefaultHandler creates an instance to handle all supported alexa directives.
-func NewDefaultHandler(authority *Authority, endpoints io.Reader) *Handler {
+func NewDefaultHandler(authority authorization.Authority, endpoints io.Reader) *Handler {
 	handler := new(Handler)
 
 	handler.AddDirectiveProcessor(directives.CreateAuthorizeDirectiveProcessor(authority))
