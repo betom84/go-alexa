@@ -18,7 +18,6 @@ import (
 
 // DeviceFactory creates the devices to handle the alexa endpoint capability
 type DeviceFactory interface {
-
 	// NewDevice creates a device for the given type and id, the created device should support
 	// the capabilities defined by the endpoint
 	NewDevice(epType string, id string) (interface{}, error)

@@ -13,7 +13,6 @@ import (
 
 // DirectiveProcessor describes something which can process an alexa directive
 type DirectiveProcessor interface {
-
 	// Process the directive for an optionally device
 	Process(*common.Directive, interface{}) (*common.Response, error)
 

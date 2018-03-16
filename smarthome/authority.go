@@ -7,7 +7,6 @@ import (
 
 // Authority to handle alexa user authorization
 type Authority struct {
-
 	// Amazon client ID used for oauth authorization
 	ClientID string
 
@@ -20,7 +19,6 @@ type Authority struct {
 
 // AcceptGrant is used to grant access to an alexa user and store the according access tokens
 func (a Authority) AcceptGrant(email string, bearerToken string, accessTokens map[string]interface{}) error {
-
 	var granted = (len(a.RestrictedUsers) == 0)
 	for _, restricted := range a.RestrictedUsers {
 		granted = (restricted == email)

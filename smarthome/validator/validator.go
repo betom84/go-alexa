@@ -24,7 +24,6 @@ func (e ValidationError) Error() (message string) {
 
 // Validator can validate []byte response against his json schema
 type Validator struct {
-
 	// SchemaReference points to a file or an url
 	SchemaReference string
 
@@ -33,7 +32,6 @@ type Validator struct {
 
 // Validate the given response against the json schema
 func (v *Validator) Validate(resp []byte) error {
-
 	if len(v.schemaBytes) == 0 {
 		err := v.loadSchemaBytes()
 		if err != nil {

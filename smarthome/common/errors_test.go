@@ -9,7 +9,6 @@ import (
 )
 
 func TestFactory(t *testing.T) {
-
 	tt := []struct {
 		name    string
 		err     common.AlexaError

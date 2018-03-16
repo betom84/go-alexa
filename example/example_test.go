@@ -31,7 +31,6 @@ func (d *MyDevice) State() (bool, error) {
 }
 
 func Example() {
-
 	// First we need to create an alexa handler.
 	handler := smarthome.Handler{
 

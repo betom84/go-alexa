@@ -19,7 +19,6 @@ func (h EndpointHealth) IsConnected() bool {
 }
 
 func TestContextProperty(t *testing.T) {
-
 	timeOfSample, _ := time.Parse(time.RFC3339, "2018-02-25T19:56:05+00:00")
 
 	tt := []struct {
