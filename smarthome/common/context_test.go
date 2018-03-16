@@ -23,10 +23,9 @@ func TestContextProperty(t *testing.T) {
 	timeOfSample, _ := time.Parse(time.RFC3339, "2018-02-25T19:56:05+00:00")
 
 	tt := []struct {
-		name          string
-		propertyValue float32
-		add           func(*common.Context)
-		json          string
+		name string
+		add  func(*common.Context)
+		json string
 	}{
 		{
 			name: "add temperature property",
