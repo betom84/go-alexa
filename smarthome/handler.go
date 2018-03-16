@@ -97,7 +97,7 @@ func (h *Handler) validateOnDemand(payload []byte) {
 	if err := h.Validator.Validate(payload); err != nil {
 		log.Printf("WARNING Response validation failed\npayload:\n%s\nerrors:%s\n", string(payload), err)
 	} else {
-		log.Printf("Response validated without errors within %.3fs (Schema: %s)", time.Now().Sub(validationStart).Seconds(), h.Validator.SchemaReference)
+		log.Printf("Response validated without errors within %.3fs (Schema: %s)", time.Since(validationStart).Seconds(), h.Validator.SchemaReference)
 	}
 }
 
@@ -168,7 +168,7 @@ func (h *Handler) handleDirective(dir *common.Directive) (r interface{}) {
 			log.Print(err)
 		}
 
-		log.Printf("Processed %s in %.3fs", dir, time.Now().Sub(startTime).Seconds())
+		log.Printf("Processed %s in %.3fs", dir, time.Since(startTime).Seconds())
 
 		return
 	}
