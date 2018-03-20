@@ -52,7 +52,6 @@ func TestValidator(t *testing.T) {
 }
 
 func testValidator(v validator.Validator, t *testing.T) {
-
 	tt := []struct {
 		name  string
 		value []byte

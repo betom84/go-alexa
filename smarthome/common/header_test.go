@@ -1,8 +1,9 @@
 package common_test
 
 import (
-	"github.com/betom84/go-alexa/smarthome/common"
 	"testing"
+
+	"github.com/betom84/go-alexa/smarthome/common"
 
 	"github.com/stretchr/testify/assert"
 )

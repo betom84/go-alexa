@@ -1,8 +1,9 @@
 package smarthome_test
 
 import (
-	"github.com/betom84/go-alexa/smarthome"
 	"testing"
+
+	"github.com/betom84/go-alexa/smarthome"
 
 	"github.com/stretchr/testify/assert"
 )

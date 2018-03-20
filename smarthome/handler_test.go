@@ -78,7 +78,6 @@ func TestNewDefaultHandler(t *testing.T) {
 }
 
 func TestHandler(t *testing.T) {
-
 	common.ConstMessageID = "any-const-message-id-for-test"
 
 	tt := []struct {
@@ -142,7 +141,6 @@ func TestHandler(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-
 			rec := httptest.NewRecorder()
 			req := httptest.NewRequest("GET", "/", bytes.NewReader(tc.request))
 
@@ -175,7 +173,6 @@ func TestHandler(t *testing.T) {
 				} else {
 					assert.Equal(t, string(tc.expectedResponse), string(responseBody), "received unexpected response body")
 				}
-
 			}
 		})
 	}

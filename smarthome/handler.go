@@ -12,12 +12,12 @@ import (
 
 	"github.com/betom84/go-alexa/smarthome/common"
 	"github.com/betom84/go-alexa/smarthome/directives"
+	"github.com/betom84/go-alexa/smarthome/directives/authorization"
 	"github.com/betom84/go-alexa/smarthome/validator"
 )
 
 // DeviceFactory creates the devices to handle the alexa endpoint capability
 type DeviceFactory interface {
-
 	// NewDevice creates a device for the given type and id, the created device should support
 	// the capabilities defined by the endpoint
 	NewDevice(epType string, id string) (interface{}, error)
@@ -41,7 +41,7 @@ type Handler struct {
 }
 
 // NewDefaultHandler creates an instance to handle all supported alexa directives.
-func NewDefaultHandler(authority *Authority, endpoints io.Reader) *Handler {
+func NewDefaultHandler(authority authorization.Authority, endpoints io.Reader) *Handler {
 	handler := new(Handler)
 
 	handler.AddDirectiveProcessor(directives.CreateAuthorizeDirectiveProcessor(authority))
@@ -85,7 +85,7 @@ func (h *Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 
 	writer.WriteHeader(http.StatusOK)
 	writer.Header().Set("Content-Type", "application/json")
-	writer.Write(resp)
+	_, _ = writer.Write(resp)
 }
 
 func (h *Handler) validateOnDemand(payload []byte) {
@@ -97,7 +97,7 @@ func (h *Handler) validateOnDemand(payload []byte) {
 	if err := h.Validator.Validate(payload); err != nil {
 		log.Printf("WARNING Response validation failed\npayload:\n%s\nerrors:%s\n", string(payload), err)
 	} else {
-		log.Printf("Response validated without errors within %.3fs (Schema: %s)", time.Now().Sub(validationStart).Seconds(), h.Validator.SchemaReference)
+		log.Printf("Response validated without errors within %.3fs (Schema: %s)", time.Since(validationStart).Seconds(), h.Validator.SchemaReference)
 	}
 }
 
@@ -115,7 +115,7 @@ func (h *Handler) writeUnauthorizedHTTPResponse(writer http.ResponseWriter) {
 
 	writer.WriteHeader(http.StatusUnauthorized)
 	writer.Header().Set("Content-Type", "text/plain")
-	writer.Write([]byte(http.StatusText(http.StatusUnauthorized)))
+	_, _ = writer.Write([]byte(http.StatusText(http.StatusUnauthorized)))
 }
 
 func (h *Handler) writeBadRequestHTTPResponse(writer http.ResponseWriter, err error) {
@@ -123,7 +123,7 @@ func (h *Handler) writeBadRequestHTTPResponse(writer http.ResponseWriter, err er
 
 	writer.WriteHeader(http.StatusBadRequest)
 	writer.Header().Set("Content-Type", "text/plain")
-	writer.Write([]byte(http.StatusText(http.StatusBadRequest)))
+	_, _ = writer.Write([]byte(http.StatusText(http.StatusBadRequest)))
 }
 
 func (h *Handler) getDirectiveFromRequestBody(body []byte) (dir *common.Directive, err error) {
@@ -168,7 +168,7 @@ func (h *Handler) handleDirective(dir *common.Directive) (r interface{}) {
 			log.Print(err)
 		}
 
-		log.Printf("Processed %s in %.3fs", dir, time.Now().Sub(startTime).Seconds())
+		log.Printf("Processed %s in %.3fs", dir, time.Since(startTime).Seconds())
 
 		return
 	}

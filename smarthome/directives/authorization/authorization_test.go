@@ -19,7 +19,6 @@ import (
 var update = flag.Bool("update", false, "Run test and update golden file")
 
 func TestAuthorization(t *testing.T) {
-
 	// never make real world requests in tests
 	authorization.RequestTokenURL = ""
 	authorization.RequestUserProfileURL = ""
@@ -53,7 +52,6 @@ func TestAuthorization(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-
 			if tc.mockHTTPHandler != nil {
 				defer tc.mockHTTPHandler.AssertExpectations(t)
 
@@ -95,7 +93,6 @@ func TestAuthorization(t *testing.T) {
 }
 
 func createMockHTTPHandler(t *testing.T, profileFile string, tokensFile string) *mocks.MockHTTPHandler {
-
 	t.Helper()
 
 	handler := mocks.MockHTTPHandler{T: t}

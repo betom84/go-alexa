@@ -1,8 +1,9 @@
 package common
 
 import (
-	"github.com/betom84/go-alexa/smarthome/common/capabilities"
 	"time"
+
+	"github.com/betom84/go-alexa/smarthome/common/capabilities"
 )
 
 // Context holds properties of an endpoint
@@ -25,9 +26,8 @@ func (c *Context) addProperty(p property) {
 
 // AddPowerStateProperty adds a powerState property to context
 func (c *Context) AddPowerStateProperty(state bool, timeOfSample time.Time) {
-
 	value := "OFF"
-	if state == true {
+	if state {
 		value = "ON"
 	}
 
@@ -41,7 +41,6 @@ func (c *Context) AddPowerStateProperty(state bool, timeOfSample time.Time) {
 
 // AddTemperatureProperty adds a temperature property to context
 func (c *Context) AddTemperatureProperty(temperature float32, timeOfSample time.Time) {
-
 	iv := int(temperature * 10)
 	v := float32(iv) / 10
 
@@ -61,7 +60,6 @@ func (c *Context) AddTemperatureProperty(temperature float32, timeOfSample time.
 
 // AddEndpointHealthProperty adds a connectivity property to context
 func (c *Context) AddEndpointHealthProperty(health capabilities.HealthConscious, timeOfSample time.Time) {
-
 	var value = "OK"
 	if !health.IsConnected() {
 		value = "UNREACHABLE"

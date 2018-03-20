@@ -6,7 +6,7 @@
 
 # go-alexa
 
-GO library to connect to [Amazon Alexa Smarthome Skill API v3](https://developer.amazon.com/de/docs/smarthome/understand-the-smart-home-skill-api.html)
+Go library to connect to [Amazon Alexa Smarthome Skill API v3](https://developer.amazon.com/de/docs/smarthome/understand-the-smart-home-skill-api.html)
 
 ## Table of Contents
 

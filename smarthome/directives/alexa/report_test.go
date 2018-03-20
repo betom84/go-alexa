@@ -15,7 +15,6 @@ import (
 var update = flag.Bool("update", false, "Run test and update golden file")
 
 func TestReport(t *testing.T) {
-
 	alexa.Now = func() time.Time {
 		t, _ := time.Parse(time.RFC3339, "2018-02-24T16:42:05+00:00")
 		return t

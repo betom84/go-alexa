@@ -2,11 +2,12 @@ package example
 
 import (
 	"fmt"
+	"net/http"
+	"strings"
+
 	"github.com/betom84/go-alexa/smarthome"
 	"github.com/betom84/go-alexa/smarthome/directives"
 	"github.com/betom84/go-alexa/smarthome/validator"
-	"net/http"
-	"strings"
 )
 
 type MyDeviceFactory struct{}
@@ -30,7 +31,6 @@ func (d *MyDevice) State() (bool, error) {
 }
 
 func Example() {
-
 	// First we need to create an alexa handler.
 	handler := smarthome.Handler{
 

@@ -1,14 +1,14 @@
 package common_test
 
 import (
-	"github.com/betom84/go-alexa/smarthome/common"
 	"testing"
+
+	"github.com/betom84/go-alexa/smarthome/common"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestFactory(t *testing.T) {
-
 	tt := []struct {
 		name    string
 		err     common.AlexaError

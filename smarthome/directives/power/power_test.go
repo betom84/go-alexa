@@ -15,7 +15,6 @@ import (
 var update = flag.Bool("update", false, "Run test and update golden file")
 
 func TestController(t *testing.T) {
-
 	power.Now = func() time.Time {
 		t, _ := time.Parse(time.RFC3339, "2018-02-23T22:57:05+00:00")
 		return t

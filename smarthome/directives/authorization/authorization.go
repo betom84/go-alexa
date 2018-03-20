@@ -4,10 +4,11 @@ package authorization
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/betom84/go-alexa/smarthome/common"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+
+	"github.com/betom84/go-alexa/smarthome/common"
 )
 
 // RequestTokenURL to change for tests
@@ -36,7 +37,6 @@ func (a Authorization) IsCapable(dir *common.Directive) bool {
 
 // Process the authorization directive, device should be nil
 func (a Authorization) Process(dir *common.Directive, device interface{}) (*common.Response, error) {
-
 	if !a.IsCapable(dir) {
 		return nil, fmt.Errorf("incompatible directive")
 	}
