@@ -26,8 +26,8 @@ func CreateAuthorizeDirectiveProcessor(authority authorization.Authority) Direct
 }
 
 // CreateDiscoveryDirectiveProcessor returns a DirectiveProcessor to process discovery directives
-func CreateDiscoveryDirectiveProcessor(endpoints io.Reader) DirectiveProcessor {
-	return discovery.Discovery{Endpoints: endpoints}
+func CreateDiscoveryDirectiveProcessor(endpoints io.ReadCloser) DirectiveProcessor {
+	return &discovery.Discovery{Endpoints: endpoints}
 }
 
 // CreatePowerControllerDirectiveProcessor returns a DirectiveProcessor to process power controller directives

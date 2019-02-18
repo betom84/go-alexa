@@ -5,6 +5,8 @@ import (
 	"os"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/betom84/go-alexa/smarthome/common"
 	"github.com/betom84/go-alexa/smarthome/testdata/helpers"
 )
@@ -73,4 +75,25 @@ func createDiscovery(t *testing.T, endpoints string) Discovery {
 		t.Fatal(err)
 	}
 	return Discovery{Endpoints: ep}
+}
+
+func TestDiscoveryUnmarshalEndpointsOnDemand(t *testing.T) {
+	ep, err := os.Open("testdata/endpoints.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	discovery := Discovery{Endpoints: ep}
+	assert.Len(t, discovery.unmarshaledEndpoints, 0)
+
+	err = discovery.unmarshalEndpointsOnDemand()
+	assert.NoError(t, err)
+	assert.Len(t, discovery.unmarshaledEndpoints, 1)
+
+	err = ep.Close()
+	assert.Error(t, err, "file already closed")
+
+	err = discovery.unmarshalEndpointsOnDemand()
+	assert.NoError(t, err)
+	assert.Len(t, discovery.unmarshaledEndpoints, 1)
 }

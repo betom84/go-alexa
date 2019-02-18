@@ -41,7 +41,7 @@ type Handler struct {
 }
 
 // NewDefaultHandler creates an instance to handle all supported alexa directives.
-func NewDefaultHandler(authority authorization.Authority, endpoints io.Reader) *Handler {
+func NewDefaultHandler(authority authorization.Authority, endpoints io.ReadCloser) *Handler {
 	handler := new(Handler)
 
 	handler.AddDirectiveProcessor(directives.CreateAuthorizeDirectiveProcessor(authority))

@@ -12,7 +12,8 @@ import (
 
 // Discovery uses the Endpoints file to process discovery directive
 type Discovery struct {
-	Endpoints io.Reader
+	Endpoints            io.ReadCloser
+	unmarshaledEndpoints []interface{}
 }
 
 // IsCapable checks if an common.Directive is an discovery directive
@@ -21,24 +22,14 @@ func (d Discovery) IsCapable(dir *common.Directive) bool {
 }
 
 // Process the discovery directive, device should be nil
-func (d Discovery) Process(dir *common.Directive, device interface{}) (*common.Response, error) {
+func (d *Discovery) Process(dir *common.Directive, device interface{}) (*common.Response, error) {
 	if !d.IsCapable(dir) {
 		return nil, fmt.Errorf("incompatible directive")
 	}
 
-	if d.Endpoints == nil {
-		return nil, fmt.Errorf("endpoints not specified")
-	}
-
-	ep, err := ioutil.ReadAll(d.Endpoints)
+	err := d.unmarshalEndpointsOnDemand()
 	if err != nil {
-		return nil, fmt.Errorf("could not read endpoints; %s", err)
-	}
-
-	var endpoints []interface{}
-	err = json.Unmarshal(ep, &endpoints)
-	if err != nil {
-		return nil, fmt.Errorf("could not unmarshal endpoints; %s", err)
+		return nil, err
 	}
 
 	resp := new(common.Response)
@@ -47,7 +38,30 @@ func (d Discovery) Process(dir *common.Directive, device interface{}) (*common.R
 	resp.Event.Payload = struct {
 		Endpoints []interface{} `json:"endpoints"`
 	}{
-		Endpoints: endpoints}
+		Endpoints: d.unmarshaledEndpoints}
 
 	return resp, nil
+}
+
+func (d *Discovery) unmarshalEndpointsOnDemand() error {
+
+	if d.Endpoints == nil && len(d.unmarshaledEndpoints) == 0 {
+		return fmt.Errorf("endpoints not specified")
+	}
+
+	if len(d.unmarshaledEndpoints) == 0 {
+		ep, err := ioutil.ReadAll(d.Endpoints)
+		if err != nil {
+			return fmt.Errorf("could not read endpoints; %s", err)
+		}
+
+		err = json.Unmarshal(ep, &d.unmarshaledEndpoints)
+		if err != nil {
+			return fmt.Errorf("could not unmarshal endpoints; %s", err)
+		}
+
+		d.Endpoints.Close()
+	}
+
+	return nil
 }
