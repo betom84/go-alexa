@@ -60,6 +60,8 @@ func (h *Handler) AddDirectiveProcessor(processor directives.DirectiveProcessor)
 // ServeHTTP is needed to satisfy the net/http.Handler interface. Therefore alexa.Handler can be used as http handler.
 func (h *Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	if ok := h.verifyBasicAuth(request); !ok {
+		log.Printf("Unauthorized request rejected (User-Agent: %s, Remote-Addr: %s)\n", request.Header.Get("User-Agent"), request.RemoteAddr)
+
 		h.writeUnauthorizedHTTPResponse(writer)
 		return
 	}
@@ -97,7 +99,7 @@ func (h *Handler) validateOnDemand(payload []byte) {
 	if err := h.Validator.Validate(payload); err != nil {
 		log.Printf("WARNING Response validation failed\npayload:\n%s\nerrors:%s\n", string(payload), err)
 	} else {
-		log.Printf("Response validated without errors within %.3fs (Schema: %s)", time.Since(validationStart).Seconds(), h.Validator.SchemaReference)
+		log.Printf("Response validated without errors (Took: %.3f, Schema: %s)", time.Since(validationStart).Seconds(), h.Validator.SchemaReference)
 	}
 }
 
@@ -111,8 +113,6 @@ func (h *Handler) verifyBasicAuth(request *http.Request) bool {
 }
 
 func (h *Handler) writeUnauthorizedHTTPResponse(writer http.ResponseWriter) {
-	log.Println("Unauthorized request rejected")
-
 	writer.WriteHeader(http.StatusUnauthorized)
 	writer.Header().Set("Content-Type", "text/plain")
 	_, _ = writer.Write([]byte(http.StatusText(http.StatusUnauthorized)))

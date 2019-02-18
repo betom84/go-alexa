@@ -22,8 +22,8 @@ func TestDirective(t *testing.T) {
 		},
 		{
 			name:     "it creates an directive with endpoint from payload",
-			payload:  []byte(`{"header":{"namespace":"Namespace","name":"Name"},"endpoint":{"cookie":{"name":"Awesome Endpoint"}}}`),
-			toString: "Namespace.Name (Awesome Endpoint)",
+			payload:  []byte(`{"header":{"namespace":"Namespace","name":"Name"},"endpoint":{"cookie":{"name":"Awesome Endpoint","type":"Type","id":"ID"}}}`),
+			toString: "Namespace.Name (Awesome Endpoint/Type/ID)",
 		},
 		{
 			name:    "it returns an error on empty payload",

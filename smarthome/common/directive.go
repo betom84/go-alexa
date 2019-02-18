@@ -25,6 +25,10 @@ func (d Directive) String() string {
 	if d.Endpoint != nil {
 		buffer.WriteString(" (")
 		buffer.WriteString(d.Endpoint.Cookie.Name)
+		buffer.WriteString("/")
+		buffer.WriteString(d.Endpoint.Cookie.Type)
+		buffer.WriteString("/")
+		buffer.WriteString(d.Endpoint.Cookie.ID)
 		buffer.WriteString(")")
 	}
 
