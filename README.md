@@ -56,7 +56,7 @@ go get github.com/betom84/go-alexa
 
 ## Usage
 
-The following example starts an https server listening for Alexa directives. Of cause you can also start an http server or don´t use BasicAuth (simply skip the assignments), but i would not recommend that.
+The following example starts an https server listening for Alexa directives. Of course you also can start an http server or don´t use BasicAuth (simply skip the assignments), but i would not recommend that.
 
 ```go
 package main
@@ -66,12 +66,13 @@ import(
     "os"
     
     "github.com/betom84/go-alexa/smarthome"
+    "github.com/betom84/go-alexa/smarthome/common/discoverable"
 )
 
 func main() {
-    endpoints, err := os.Open("endpoints.json")
-    if err != nil {
-        panic(err)
+    endpoints := []discoverable.Endpoint{
+        discoverable.Endpoint{...},
+        discoverable.Endpoint{...},
     }
 
     authority := smarthome.Authority{
@@ -92,46 +93,11 @@ func main() {
 }
 ```
 I asume you use [LWA for account linking](https://developer.amazon.com/de/docs/smarthome/authenticate-an-alexa-user-account-linking.html). You must add the scope `profile` in the "Account Linking" section in the skill developer console. Then the users email address can be compared with the `RestrictedUsers` to grant access.
-In that example we only allow the Alexa-User with the e-mail `amzn-user@mail.com` to get access. See amazon documentation for more information. See [amazon documentation](https://developer.amazon.com/de/docs/smarthome/authenticate-a-customer-permissions.html#getting-authorization) for more information.
+In that example we only allow the Alexa-User with the e-mail `amzn-user@mail.com` to get access. See [amazon documentation](https://developer.amazon.com/de/docs/smarthome/authenticate-a-customer-permissions.html#getting-authorization) for more information.
 
 ### Define devices discoverable for Alexa
 
-The file `endpoints.json` used by that example, must contain the devices (or endpoints) accessible by your smart home skill. This could look like the following example:
-```json
-[
-    {
-        "endpointId": "example-01",
-        "friendlyName": "Example",
-        "description": "Endpoint for example",
-        "manufacturerName": "Example Inc.",
-        "displayCategories": [
-            "LIGHT"
-        ],
-        "cookie": {
-            "type": "example",
-            "id": "01",
-            "name": "Example"
-        },
-        "capabilities": [
-            {
-                "type": "AlexaInterface",
-                "interface": "Alexa.PowerController",
-                "version": "3",
-                "properties": {
-                    "supported": [
-                        {
-                            "name": "powerState"
-                        }
-                    ],
-                    "proactivelyReported": false,
-                    "retrievable": true
-                }
-            }
-        ]
-    }
-]
-```
-As you can see, this file contains exactly the structure expected by Alexa´s [Discover](https://developer.amazon.com/de/docs/device-apis/alexa-discovery.html) directive. The fields declared within `cookie` are passed to the [DeviceFactory](#create-a-devicefactory) to create a device according the defined `capabilities`. That means, devices created by the factory needs to satisfy the according [capability interface](https://godoc.org/github.com/betom84/go-alexa/smarthome/common/capabilities) to work out of the box.
+The endpoint model contains the information expected by Alexa´s [Discover](https://developer.amazon.com/de/docs/device-apis/alexa-discovery.html) directive. The properties from `Cookie` are used to create a device with the registered [DeviceFactory](#create-a-devicefactory). Also capabilities controllable by Alexa are defined within endpoint model. That means, devices created by the factory needs to satisfy the according [capability interface](https://godoc.org/github.com/betom84/go-alexa/smarthome/common/capabilities).
 
 ### Create a DeviceFactory
 
@@ -158,7 +124,6 @@ type CustomDirectiveProcessor struct{}
 
 func (p CustomDirectiveProcessor) Process(directive *common.Directive, device interface{}) (*common.Response, error) {
     // perform the action intended by the directive at the device
-
 }
 
 func (p CustomDirectiveProcessor) IsCapable(directive *common.Directive) bool {

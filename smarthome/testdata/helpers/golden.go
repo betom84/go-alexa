@@ -26,15 +26,22 @@ func AssertEqualsGolden(t *testing.T, goldenFile string, response *common.Respon
 		t.Fatalf("failed to assert equality, unable to read golden; %v", err)
 	}
 
-	/*
-		expected = bytes.Replace(expected, []byte("\x0a"), []byte(""), -1)
-		expected = bytes.Replace(expected, []byte("\x0d"), []byte(""), -1)
-		expected = bytes.Replace(expected, []byte("\x20"), []byte(""), -1)
-	*/
+	current = removePrettyPrint(current)
+	expected = removePrettyPrint(expected)
 
 	if c := bytes.Compare(current, expected); c != 0 {
 		t.Errorf("response doesnt match golden; %v", c)
+		t.Errorf("response:\n%s\ngolden: \n%s\n doesnt match golden", string(current), string(expected))
 	}
+}
+
+func removePrettyPrint(target []byte) []byte {
+	result := bytes.Replace(target, []byte("\x0a"), []byte(""), -1)
+	result = bytes.Replace(result, []byte("\x0d"), []byte(""), -1)
+	result = bytes.Replace(result, []byte("\x20"), []byte(""), -1)
+	//result = bytes.Replace(result, []byte("\x09"), []byte(""), -1)
+
+	return result
 }
 
 // UpdateGolden saves marshaled response to golden file

@@ -2,17 +2,15 @@
 package discovery
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
-	"io/ioutil"
 
 	"github.com/betom84/go-alexa/smarthome/common"
+	"github.com/betom84/go-alexa/smarthome/common/discoverable"
 )
 
 // Discovery uses the Endpoints file to process discovery directive
 type Discovery struct {
-	Endpoints            io.ReadCloser
+	Endpoints            []discoverable.Endpoint
 	unmarshaledEndpoints []interface{}
 }
 
@@ -22,46 +20,23 @@ func (d Discovery) IsCapable(dir *common.Directive) bool {
 }
 
 // Process the discovery directive, device should be nil
-func (d *Discovery) Process(dir *common.Directive, device interface{}) (*common.Response, error) {
+func (d Discovery) Process(dir *common.Directive, device interface{}) (*common.Response, error) {
 	if !d.IsCapable(dir) {
 		return nil, fmt.Errorf("incompatible directive")
 	}
 
-	err := d.unmarshalEndpointsOnDemand()
-	if err != nil {
-		return nil, err
+	if d.Endpoints == nil {
+		return nil, fmt.Errorf("endpoints not specified")
 	}
 
 	resp := new(common.Response)
 	resp.Event.Header = common.NewHeader("Discover.Response", "Alexa.Discovery")
 
 	resp.Event.Payload = struct {
-		Endpoints []interface{} `json:"endpoints"`
+		Endpoints []discoverable.Endpoint `json:"endpoints"`
 	}{
-		Endpoints: d.unmarshaledEndpoints}
+		Endpoints: d.Endpoints,
+	}
 
 	return resp, nil
-}
-
-func (d *Discovery) unmarshalEndpointsOnDemand() error {
-
-	if d.Endpoints == nil && len(d.unmarshaledEndpoints) == 0 {
-		return fmt.Errorf("endpoints not specified")
-	}
-
-	if len(d.unmarshaledEndpoints) == 0 {
-		ep, err := ioutil.ReadAll(d.Endpoints)
-		if err != nil {
-			return fmt.Errorf("could not read endpoints; %s", err)
-		}
-
-		err = json.Unmarshal(ep, &d.unmarshaledEndpoints)
-		if err != nil {
-			return fmt.Errorf("could not unmarshal endpoints; %s", err)
-		}
-
-		d.Endpoints.Close()
-	}
-
-	return nil
 }

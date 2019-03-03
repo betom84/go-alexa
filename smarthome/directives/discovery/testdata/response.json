@@ -1,44 +1,44 @@
 {
-   "event": {
-     "header": {
-       "namespace": "Alexa.Discovery",
-       "name": "Discover.Response",
-       "messageId": "",
-       "payloadVersion": "3"
-     },
-     "payload": {
-       "endpoints": [
-         {
-           "capabilities": [
-             {
-               "interface": "Alexa.PowerController",
-               "properties": {
-                 "proactivelyReported": false,
-                 "retrievable": true,
-                 "supported": [
-                   {
-                     "name": "powerState"
-                   }
-                 ]
-               },
-               "type": "AlexaInterface",
-               "version": "3"
-             }
-           ],
-           "cookie": {
-             "id": "01",
-             "name": "Test",
-             "type": "testtype"
-           },
-           "description": "Endpoint for testing",
-           "displayCategories": [
-             "LIGHT"
-           ],
-           "endpointId": "test-01",
-           "friendlyName": "Test",
-           "manufacturerName": "TDD Inc."
-         }
-       ]
-     }
-   }
- }
+  "event": {
+    "header": {
+      "namespace": "Alexa.Discovery",
+      "name": "Discover.Response",
+      "messageId": "",
+      "payloadVersion": "3"
+    },
+    "payload": {
+      "endpoints": [
+        {
+          "endpointId": "test-01",
+          "friendlyName": "Test",
+          "description": "Endpoint for testing",
+          "manufacturerName": "TDD Inc.",
+          "displayCategories": [
+            "LIGHT"
+          ],
+          "cookie": {
+            "id": "01",
+            "type": "testtype",
+            "name": "Test"
+          },
+          "capabilities": [
+            {
+              "type": "AlexaInterface",
+              "interface": "Alexa.PowerController",
+              "version": "3",
+              "properties": {
+                "supported": [
+                  {
+                    "name": "powerState"
+                  }
+                ],
+                "proactivelyReported": false,
+                "retrievable": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

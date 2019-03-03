@@ -2,9 +2,8 @@
 package directives
 
 import (
-	"io"
-
 	"github.com/betom84/go-alexa/smarthome/common"
+	"github.com/betom84/go-alexa/smarthome/common/discoverable"
 	"github.com/betom84/go-alexa/smarthome/directives/alexa"
 	"github.com/betom84/go-alexa/smarthome/directives/authorization"
 	"github.com/betom84/go-alexa/smarthome/directives/discovery"
@@ -26,8 +25,8 @@ func CreateAuthorizeDirectiveProcessor(authority authorization.Authority) Direct
 }
 
 // CreateDiscoveryDirectiveProcessor returns a DirectiveProcessor to process discovery directives
-func CreateDiscoveryDirectiveProcessor(endpoints io.ReadCloser) DirectiveProcessor {
-	return &discovery.Discovery{Endpoints: endpoints}
+func CreateDiscoveryDirectiveProcessor(endpoints []discoverable.Endpoint) DirectiveProcessor {
+	return discovery.Discovery{Endpoints: endpoints}
 }
 
 // CreatePowerControllerDirectiveProcessor returns a DirectiveProcessor to process power controller directives

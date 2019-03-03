@@ -1,11 +1,13 @@
 package discovery
 
 import (
+	"encoding/json"
 	"flag"
+	"io/ioutil"
 	"os"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/betom84/go-alexa/smarthome/common/discoverable"
 
 	"github.com/betom84/go-alexa/smarthome/common"
 	"github.com/betom84/go-alexa/smarthome/testdata/helpers"
@@ -39,12 +41,6 @@ func TestDiscovery(t *testing.T) {
 			directive:   helpers.LoadRequest(t, "testdata/request.json"),
 			expectError: "endpoints not specified",
 		},
-		{
-			name:        "it returns an error when endpoints could not be unmarshaled",
-			processor:   createDiscovery(t, "testdata/endpoints.invalid"),
-			directive:   helpers.LoadRequest(t, "testdata/request.json"),
-			expectError: "could not unmarshal endpoints; invalid character 'o' in literal null (expecting 'u')",
-		},
 	}
 
 	for _, tc := range tt {
@@ -70,30 +66,21 @@ func TestDiscovery(t *testing.T) {
 }
 
 func createDiscovery(t *testing.T, endpoints string) Discovery {
-	ep, err := os.Open(endpoints)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return Discovery{Endpoints: ep}
-}
-
-func TestDiscoveryUnmarshalEndpointsOnDemand(t *testing.T) {
-	ep, err := os.Open("testdata/endpoints.json")
+	file, err := os.Open(endpoints)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	discovery := Discovery{Endpoints: ep}
-	assert.Len(t, discovery.unmarshaledEndpoints, 0)
+	ep, err := ioutil.ReadAll(file)
+	if err != nil {
+		t.Fatalf("could not read endpoints; %s", err)
+	}
 
-	err = discovery.unmarshalEndpointsOnDemand()
-	assert.NoError(t, err)
-	assert.Len(t, discovery.unmarshaledEndpoints, 1)
+	var diEp = []discoverable.Endpoint{}
+	err = json.Unmarshal(ep, &diEp)
+	if err != nil {
+		t.Fatalf("could not unmarshal endpoints; %s", err)
+	}
 
-	err = ep.Close()
-	assert.Error(t, err, "file already closed")
-
-	err = discovery.unmarshalEndpointsOnDemand()
-	assert.NoError(t, err)
-	assert.Len(t, discovery.unmarshaledEndpoints, 1)
+	return Discovery{Endpoints: diEp}
 }
