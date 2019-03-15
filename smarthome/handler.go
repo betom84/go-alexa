@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 
@@ -60,7 +59,7 @@ func (h *Handler) AddDirectiveProcessor(processor directives.DirectiveProcessor)
 // ServeHTTP is needed to satisfy the net/http.Handler interface. Therefore alexa.Handler can be used as http handler.
 func (h *Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	if ok := h.verifyBasicAuth(request); !ok {
-		log.Printf("Unauthorized request rejected (User-Agent: %s, Remote-Addr: %s)\n", request.Header.Get("User-Agent"), request.RemoteAddr)
+		Log.Warning("Unauthorized request rejected (User-Agent: %s, Remote-Addr: %s)\n", request.Header.Get("User-Agent"), request.RemoteAddr)
 
 		h.writeUnauthorizedHTTPResponse(writer)
 		return
@@ -97,9 +96,9 @@ func (h *Handler) validateOnDemand(payload []byte) {
 
 	validationStart := time.Now()
 	if err := h.Validator.Validate(payload); err != nil {
-		log.Printf("WARNING Response validation failed\npayload:\n%s\nerrors:%s\n", string(payload), err)
+		Log.Warning("Response validation failed\npayload:\n%s\nerrors:%s\n", string(payload), err)
 	} else {
-		log.Printf("Response validated without errors (Took: %.3f, Schema: %s)", time.Since(validationStart).Seconds(), h.Validator.SchemaReference)
+		Log.Info("Response validated without errors (Took: %.3f, Schema: %s)", time.Since(validationStart).Seconds(), h.Validator.SchemaReference)
 	}
 }
 
@@ -119,7 +118,7 @@ func (h *Handler) writeUnauthorizedHTTPResponse(writer http.ResponseWriter) {
 }
 
 func (h *Handler) writeBadRequestHTTPResponse(writer http.ResponseWriter, err error) {
-	log.Println("Unable to handle request,", err)
+	Log.Error("Unable to handle request,", err)
 
 	writer.WriteHeader(http.StatusBadRequest)
 	writer.Header().Set("Content-Type", "text/plain")
@@ -130,7 +129,7 @@ func (h *Handler) getDirectiveFromRequestBody(body []byte) (dir *common.Directiv
 	var raw map[string]*json.RawMessage
 	err = json.Unmarshal(body, &raw)
 	if err != nil {
-		log.Printf("%s; %s", err, body)
+		Log.Error("%s; %s", err, body)
 		return nil, fmt.Errorf("Failed to unmarshal request body")
 	}
 
@@ -147,7 +146,7 @@ func (h *Handler) handleDirective(dir *common.Directive) (r interface{}) {
 	var err error
 
 	startTime := time.Now()
-	log.Printf("Received directive %s", dir)
+	Log.Trace("Received directive %s", dir)
 
 	for _, processor := range h.directiveProcessors {
 		if !processor.IsCapable(dir) {
@@ -158,17 +157,17 @@ func (h *Handler) handleDirective(dir *common.Directive) (r interface{}) {
 		if dir.Endpoint != nil {
 			device, err = h.DeviceFactory.NewDevice(dir.Endpoint.Cookie.Type, dir.Endpoint.Cookie.ID)
 			if err != nil {
-				log.Printf("Unable to create endpoint device (%v)", err)
+				Log.Error("Unable to create endpoint device (%v)", err)
 			}
 		}
 
 		r, err = processor.Process(dir, device)
 		if err != nil {
 			r = h.createErrorResponse(dir, h.transformError(err))
-			log.Print(err)
+			Log.Error("%v", err)
 		}
 
-		log.Printf("Processed %s in %.3fs", dir, time.Since(startTime).Seconds())
+		Log.Trace("Processed %s in %.3fs", dir, time.Since(startTime).Seconds())
 
 		return
 	}

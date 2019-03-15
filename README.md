@@ -44,8 +44,8 @@ This project was created to control smarthome devices (e.g. [Homematic](http://w
 
 ## Requirements
 
-- Of cause, all those [prerequisites to Smart Home Skill Development](https://developer.amazon.com/de/docs/smarthome/understand-the-smart-home-skill-api.html#prerequisites-to-smart-home-skill-development) whould be very helpful
-- I asume you authenticate an Alexa user with [LWA](https://developer.amazon.com/de/docs/smarthome/authenticate-an-alexa-user-account-linking.html). To support other OAuth2 providers, you need to add a [custom directive processor](#custom-directive-processor) to handle authentication directives.
+- Of course, all those [prerequisites to Smart Home Skill Development](https://developer.amazon.com/de/docs/smarthome/understand-the-smart-home-skill-api.html#prerequisites-to-smart-home-skill-development) whould be very helpful
+- I asume you authenticate an Alexa user by using [LWA](https://developer.amazon.com/de/docs/smarthome/authenticate-an-alexa-user-account-linking.html). To support other OAuth2 providers, you need to add a [custom directive processor](#custom-directive-processor) to handle authentication directives.
 
 ## Installation
 
@@ -135,6 +135,10 @@ And add it to the previously created handler.
 handler.AddDirectiveProcessor(CustomDirectiveProcessor{})
 ```
 
+### Logging
+
+By default only errors get logged to `stderr`. Change default logging behaviour by creating a new instance with custom writer and severenity by using `smarthome.NewDefaultLogger(...)`. Alternativly assign a custom `smarthome.Logger` implementation to `smarthome.Log` to override logging for your needs. 
+
 ## FAQ
 
 t.b.d.
@@ -143,7 +147,6 @@ t.b.d.
 
 - Support asynchronous responses and automatically use them if processing a directive takes to long
 - Looking forward to find a better way to control window blinds (instead of simply turning them on and off)
-- Find a better way for logging, avoid using static `log.Printf()`
 
 ## License
 

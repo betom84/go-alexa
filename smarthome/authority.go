@@ -2,7 +2,6 @@ package smarthome
 
 import (
 	"errors"
-	"log"
 )
 
 // Authority to handle alexa user authorization
@@ -33,7 +32,7 @@ func (a Authority) AcceptGrant(email string, bearerToken string, accessTokens ma
 
 	// todo, hold the token for async responses and refresh after the given time
 	//log.Printf("Granted access to %s.\nAccess tokens:%s", email, accessTokens)
-	log.Printf("Granted access to %s.", email)
+	Log.Info("Granted access to %s.", email)
 
 	return nil
 }
