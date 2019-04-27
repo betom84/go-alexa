@@ -41,7 +41,7 @@ func Example() {
 
 		// Optionally we set a validator instance. Because alexa wont work with non well-formed
 		// responses, this is especially helpful for debugging. The validation result will be
-		// logged by using go stdlib log.Print() method.
+		// logged as warning.
 		Validator: &validator.Validator{},
 	}
 
